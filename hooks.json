@@ -1,0 +1,49 @@
+[
+    {
+      "id": "webhook",
+      "execute-command": "/app.sh",
+      "command-working-directory": "/",
+      "include-command-output-in-response":true,
+      "pass-arguments-to-command":
+      [
+        {
+          "source": "payload",
+          "context": "audit.context"
+        },
+        {
+          "source": "payload",
+          "type": "audit.type"
+        }
+      ],
+      "trigger-rule":
+      {
+        "and":
+        [
+          {
+            "match":
+            {
+              "type": "value",
+              "value": "Admin - Export databases for backup",
+              "parameter":
+              {
+                "source": "payload",
+                "name": "audit.context"
+              }
+            }
+          },
+          {
+            "match":
+            {
+              "type": "value",
+              "value": "finished",
+              "parameter":
+              {
+                "source": "payload",
+                "name": "audit.type"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]

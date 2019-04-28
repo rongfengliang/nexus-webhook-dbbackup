@@ -1,0 +1,17 @@
+version: "3"
+services:
+  webhook:
+    image: almir/webhook
+    command: ["-verbose", "-hooks=/etc/webhook/hooks.json","-hotreload"]
+    volumes:
+    - "./hooks.json:/etc/webhook/hooks.json"
+    - "./app.sh:/app.sh"
+    ports:
+    - "9000:9000"
+  nexus:
+    image: sonatype/nexus3
+    ports:
+    - "8081:8081"
+    volumes:
+    - ./nexus-data:/nexus-data
+    - ./backup/:/backup/
